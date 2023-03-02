@@ -7,9 +7,7 @@ from termcolor import colored
 
 warnings.filterwarnings("ignore")
 
-def get_openai_response(prompt, previous_messages):
-
-    messages = previous_messages + [prompt]
+def get_openai_response(messages):
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -30,11 +28,9 @@ def main():
         if prompt.lower() in ["exit", "quit"]:
             break
 
-        message = {"role": "user", "content": prompt}
+        messages.append({"role": "user", "content": prompt})
         
-        response = get_openai_response(message, messages)
-        
-        messages.append(message)
+        response = get_openai_response(messages)
         messages.append(dict(response))
 
         print('\n')
@@ -42,4 +38,4 @@ def main():
         print('\n')
 
 if __name__ == "__main__":
-    main()
+    main()it
